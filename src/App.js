@@ -161,7 +161,7 @@ function App() {
                 <th>No</th>
                 <th>Device ID</th>
                 <th>Pilihan</th>
-                <th>Waktu Vote</th>
+                <th>Tanggal Vote</th>
               </tr>
             </thead>
             <tbody>
@@ -170,7 +170,7 @@ function App() {
                   <td>{index + 1}</td>
                   <td>{vote.deviceId}</td>
                   <td>{vote.vote}</td>
-                  <td>{vote.timestamp}</td>
+                  <td>{new Date(vote.timestamp).toISOString().split("T")[0]}</td>
                 </tr>
               ))}
               <tr>
