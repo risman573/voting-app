@@ -57,17 +57,19 @@ db.getConnection((err, connection) => {
     connection.release();
 });
 
-
 app.post('/api/votes', (req, res) => {
-    const { deviceId, vote } = req.body;
+    const { deviceId, vote, timestamp } = req.body;
 
-    // Query untuk memasukkan vote hanya jika deviceId belum ada
+    // Konversi timestamp dari '2025-03-16T03:20:42.590Z' → '2025-03-16 03:20:42'
+    const formattedTimestamp = new Date(timestamp).toISOString().slice(0, 19).replace("T", " ");
+
     const insertQuery = `
         INSERT INTO votes (deviceId, vote, timestamp)
-        SELECT ?, ?, NOW() FROM DUAL
-        WHERE NOT EXISTS (SELECT 1 FROM votes WHERE deviceId = ?)`;
+        SELECT ?, ?, ? FROM DUAL
+        WHERE NOT EXISTS (SELECT 1 FROM votes WHERE deviceId = ?);
+    `;
 
-    db.query(insertQuery, [deviceId, vote, deviceId], (err, results) => {
+    db.query(insertQuery, [deviceId, vote, formattedTimestamp, deviceId], (err, results) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }

@@ -50,41 +50,44 @@ function App() {
   };
 
   const handleVote = (voteType) => {
+    const deviceTimestamp = new Date().toISOString(); // Waktu dari perangkat
+
     const newVote = {
-      deviceId: deviceId,
-      vote: voteType
+        deviceId: deviceId,
+        vote: voteType,
+        timestamp: deviceTimestamp
     };
 
     fetch('http://localhost:5000/api/votes', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newVote),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newVote),
     })
     .then(response => response.json())
     .then(data => {
-      if (data.message === 'Anda sudah memberikan suara!') {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Peringatan',
-          text: data.message,
-        });
-      } else {
-        console.log(data.message);
-        setVotes([...votes, newVote]);
-        Swal.fire({
-          icon: 'success',
-          title: 'Terima Kasih!',
-          text: `Anda telah memilih "${voteType}"`,
-        });
-      }
+        if (data.message === 'Anda sudah memberikan suara!') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Peringatan',
+                text: data.message,
+            });
+        } else {
+            console.log(data.message);
+            setVotes([...votes, newVote]);
+            Swal.fire({
+                icon: 'success',
+                title: 'Terima Kasih!',
+                text: `Anda telah memilih "${voteType}"`,
+            });
+        }
     })
     .catch(error => {
-      console.error('Error:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Voting gagal. Silakan coba lagi.',
-      });
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Voting gagal. Silakan coba lagi.',
+        });
     });
   };
 
@@ -142,7 +145,10 @@ function App() {
         <button className="toggle-mode" onClick={toggleDarkMode}>
           {darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
         </button>
-        <h1>Bukber ?</h1>
+        <h2>
+          Ubur - Ubur Ikan Lele <br/>
+          Bukber Engga Le ?
+        </h2>
         <div className="vote-buttons">
           <button onClick={() => handleVote('Gas')}>Gas</button>
           <button
@@ -161,7 +167,7 @@ function App() {
                 <th>No</th>
                 <th>Device ID</th>
                 <th>Pilihan</th>
-                <th>Tanggal Vote</th>
+                <th>Waktu Vote</th>
               </tr>
             </thead>
             <tbody>
@@ -170,7 +176,7 @@ function App() {
                   <td>{index + 1}</td>
                   <td>{vote.deviceId}</td>
                   <td>{vote.vote}</td>
-                  <td>{new Date(vote.timestamp).toISOString().split("T")[0]}</td>
+                  <td>{new Date(vote.timestamp).toLocaleString("en-CA", { timeZone: "Asia/Jakarta" }).replace(",", "")}</td>
                 </tr>
               ))}
               <tr>

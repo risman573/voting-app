@@ -18,7 +18,8 @@
     "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
     "sweetalert2": "^11.6.13",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yocto-queue": "^1.2.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
