@@ -178,7 +178,8 @@ function App() {
                   <td>{index + 1}</td>
                   <td>{vote.deviceId}</td>
                   <td>{vote.vote}</td>
-                  <td>{new Date(vote.timestamp).toLocaleString("en-CA", { timeZone: "Asia/Jakarta" }).replace(",", "")}</td>
+                  {/* <td>{new Date(vote.timestamp).toLocaleString("en-CA", { timeZone: "Asia/Jakarta" }).replace(",", "")}</td> */}
+                  <td>{new Date(vote.timestamp).toLocaleDateString("id-ID", { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
                 </tr>
               ))}
               <tr>
