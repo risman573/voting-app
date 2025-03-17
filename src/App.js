@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Swal from 'sweetalert2';
 
+const API_URL = 'https://app-89af645b-a3a8-49a3-9433-3c843927cd06.cleverapps.io';
+
 function App() {
   const deviceId = localStorage.getItem('deviceId') || Date.now().toString();
   localStorage.setItem('deviceId', deviceId);
@@ -26,7 +28,7 @@ function App() {
   // New useEffect to fetch votes from the backend
   useEffect(() => {
     const fetchVotes = () => {
-      fetch('http://localhost:5000/api/votes')
+      fetch(`${API_URL}/api/votes`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -58,7 +60,7 @@ function App() {
         timestamp: deviceTimestamp
     };
 
-    fetch('http://localhost:5000/api/votes', {
+    fetch(`${API_URL}/api/votes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newVote),
@@ -110,7 +112,7 @@ function App() {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch('http://localhost:5000/api/votes', {
+        fetch(`${API_URL}/api/votes`, {
           method: 'DELETE',
         })
         .then(response => {
