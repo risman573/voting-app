@@ -149,7 +149,7 @@ function App() {
         </button>
         <h2>
           Ubur - Ubur Ikan Lele <br/>
-          Ayo Bukber Le ?
+          Ayo Bukber Le !!!
         </h2>
         <div className="vote-buttons">
           <button onClick={() => handleVote('Gas')}>Gas</button>
